@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#fffaf0" />
+    <meta
+      name="description"
+      content="토끼 모찌, 치타 치치, 펭귄 포포에게 귀여운 코디 세트를 입혀 주는 어린이용 옷입히기 게임"
+    />
+    <title>모찌와 친구들의 작은 옷장</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jua&family=Nunito:wght@700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="sky-shape sky-shape--one" aria-hidden="true"></div>
+    <div class="sky-shape sky-shape--two" aria-hidden="true"></div>
+
+    <main class="game-shell">
+      <header class="game-header">
+        <div class="header-title">
+          <button class="header-back-button is-hidden" id="changeCharacterButton" type="button" aria-label="캐릭터 선택 화면으로 돌아가기">
+            <span aria-hidden="true">←</span>
+          </button>
+          <h1>작은 옷장</h1>
+        </div>
+        <button class="sound-button" id="soundButton" type="button" aria-pressed="true">
+          <span aria-hidden="true">♪</span>
+          <span class="sound-label visually-hidden">소리 켜짐</span>
+        </button>
+      </header>
+
+      <section class="character-picker-screen" id="characterPicker" aria-labelledby="pickerTitle">
+        <div class="picker-copy">
+          <h2 id="pickerTitle">친구를 골라요!</h2>
+        </div>
+        <div class="picker-grid" id="pickerGrid"></div>
+      </section>
+
+      <section class="game-board is-hidden" id="gameBoard" aria-label="귀여운 동물 친구 옷입히기 게임">
+        <div class="stage-panel">
+          <div class="stage-topline">
+            <div class="stage-identity">
+              <div class="name-tag" id="characterName"><span aria-hidden="true">🐰</span> 모찌</div>
+            </div>
+            <div class="progress-dots" aria-label="코디 준비 상태" id="progressDots">
+              <i></i><i></i><i></i><i></i>
+            </div>
+          </div>
+
+          <div class="stage" id="stage">
+            <div class="sparkles" id="sparkles" aria-hidden="true"></div>
+            <div class="speech-bubble" id="speechBubble" aria-live="polite">♥</div>
+
+            <svg
+              class="bunny character"
+              id="bunny"
+              viewBox="0 0 380 520"
+              role="img"
+              aria-label="옷을 입고 있는 귀여운 동물 친구"
+            >
+              <defs>
+                <filter id="softShadow" x="-30%" y="-30%" width="160%" height="180%">
+                  <feDropShadow dx="0" dy="7" stdDeviation="6" flood-color="#725b72" flood-opacity=".18" />
+                </filter>
+                <linearGradient id="fur" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#fffdf8" />
+                  <stop offset="1" stop-color="#f3e9df" />
+                </linearGradient>
+                <linearGradient id="denim" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#82b6e7" />
+                  <stop offset="1" stop-color="#568eca" />
+                </linearGradient>
+                <clipPath id="topFitClip">
+                  <ellipse cx="190" cy="339" rx="119" ry="136" />
+                  <ellipse cx="91" cy="341" rx="40" ry="88" transform="rotate(12 91 341)" />
+                  <ellipse cx="289" cy="341" rx="40" ry="88" transform="rotate(-12 289 341)" />
+                </clipPath>
+              </defs>
+
+              <ellipse cx="190" cy="488" rx="112" ry="18" fill="#8c6f84" opacity=".13" />
+
+              <g class="character-layer is-active" data-character="bunny" data-layer="back" filter="url(#softShadow)">
+                <g class="head-back-detail">
+                  <ellipse cx="135" cy="95" rx="39" ry="91" transform="rotate(-12 135 95)" fill="url(#fur)" stroke="#e7d9d3" stroke-width="4" />
+                  <ellipse cx="245" cy="95" rx="39" ry="91" transform="rotate(12 245 95)" fill="url(#fur)" stroke="#e7d9d3" stroke-width="4" />
+                  <ellipse cx="136" cy="94" rx="17" ry="64" transform="rotate(-12 136 94)" fill="#f7bfc4" opacity=".7" />
+                  <ellipse cx="244" cy="94" rx="17" ry="64" transform="rotate(12 244 94)" fill="#f7bfc4" opacity=".7" />
+                </g>
+
+                <ellipse cx="190" cy="336" rx="107" ry="128" fill="url(#fur)" stroke="#e7d9d3" stroke-width="4" />
+                <ellipse cx="94" cy="339" rx="32" ry="81" transform="rotate(12 94 339)" fill="url(#fur)" stroke="#e7d9d3" stroke-width="4" />
+                <ellipse cx="286" cy="339" rx="32" ry="81" transform="rotate(-12 286 339)" fill="url(#fur)" stroke="#e7d9d3" stroke-width="4" />
+                <ellipse cx="145" cy="454" rx="44" ry="52" fill="url(#fur)" stroke="#e7d9d3" stroke-width="4" />
+                <ellipse cx="235" cy="454" rx="44" ry="52" fill="url(#fur)" stroke="#e7d9d3" stroke-width="4" />
+              </g>
+
+              <g class="character-layer" data-character="cheetah" data-layer="back" filter="url(#softShadow)">
+                <path d="M272 373 Q339 371 328 309 Q322 279 302 288" fill="none" stroke="#e5a33e" stroke-width="27" stroke-linecap="round" />
+                <path d="M316 345 L337 352 M316 315 L330 308" stroke="#6e5038" stroke-width="7" stroke-linecap="round" />
+                <g class="head-back-detail">
+                  <circle cx="119" cy="126" r="42" fill="#e5a33e" stroke="#ad6f28" stroke-width="4" />
+                  <circle cx="261" cy="126" r="42" fill="#e5a33e" stroke="#ad6f28" stroke-width="4" />
+                  <circle cx="119" cy="126" r="20" fill="#74513a" opacity=".85" />
+                  <circle cx="261" cy="126" r="20" fill="#74513a" opacity=".85" />
+                </g>
+                <ellipse cx="190" cy="336" rx="107" ry="128" fill="#eeb252" stroke="#ad6f28" stroke-width="4" />
+                <ellipse cx="94" cy="339" rx="32" ry="81" transform="rotate(12 94 339)" fill="#eeb252" stroke="#ad6f28" stroke-width="4" />
+                <ellipse cx="286" cy="339" rx="32" ry="81" transform="rotate(-12 286 339)" fill="#eeb252" stroke="#ad6f28" stroke-width="4" />
+                <ellipse cx="145" cy="454" rx="44" ry="52" fill="#eeb252" stroke="#ad6f28" stroke-width="4" />
+                <ellipse cx="235" cy="454" rx="44" ry="52" fill="#eeb252" stroke="#ad6f28" stroke-width="4" />
+              </g>
+
+              <g class="character-layer" data-character="penguin" data-layer="back" filter="url(#softShadow)">
+                <ellipse cx="190" cy="336" rx="107" ry="128" fill="#3e4656" stroke="#252b37" stroke-width="4" />
+                <ellipse cx="91" cy="340" rx="29" ry="85" transform="rotate(18 91 340)" fill="#3e4656" stroke="#252b37" stroke-width="4" />
+                <ellipse cx="289" cy="340" rx="29" ry="85" transform="rotate(-18 289 340)" fill="#3e4656" stroke="#252b37" stroke-width="4" />
+                <ellipse cx="143" cy="468" rx="50" ry="27" transform="rotate(-5 143 468)" fill="#f1ad45" stroke="#c5762f" stroke-width="4" />
+                <ellipse cx="237" cy="468" rx="50" ry="27" transform="rotate(5 237 468)" fill="#f1ad45" stroke="#c5762f" stroke-width="4" />
+              </g>
+
+              <g class="clothing-layer" data-category="bottom" data-value="skirt">
+                <path d="M105 365 Q190 340 275 365 L291 443 Q190 471 89 443 Z" fill="#f7d36e" stroke="#dba542" stroke-width="4" />
+                <path d="M105 365 Q190 389 275 365" fill="none" stroke="#fff4c7" stroke-width="9" />
+                <path d="M135 378 L126 441 M190 384 L190 454 M245 378 L254 441" stroke="#dba542" stroke-width="3" opacity=".55" />
+              </g>
+              <g class="clothing-layer" data-category="bottom" data-value="shorts">
+                <path d="M106 358 Q190 340 274 358 L273 428 L208 427 L190 393 L172 427 L107 428 Z" fill="url(#denim)" stroke="#467bad" stroke-width="4" />
+                <path d="M190 352 V393" stroke="#d7ecff" stroke-width="4" />
+                <circle cx="190" cy="365" r="5" fill="#f7d36e" />
+                <path d="M126 376 Q144 389 163 376 M217 376 Q236 389 254 376" fill="none" stroke="#d7ecff" stroke-width="3" />
+              </g>
+              <g class="clothing-layer" data-category="bottom" data-value="overalls">
+                <path d="M111 353 Q190 340 269 353 L266 431 L211 431 L190 395 L169 431 L114 431 Z" fill="#79aee0" stroke="#497fae" stroke-width="4" />
+                <path d="M145 302 L151 374 M235 302 L229 374" stroke="#497fae" stroke-width="18" stroke-linecap="round" />
+                <rect x="146" y="332" width="88" height="72" rx="14" fill="#79aee0" stroke="#497fae" stroke-width="4" />
+                <rect x="169" y="352" width="42" height="28" rx="7" fill="#96c5ef" stroke="#497fae" stroke-width="3" />
+                <circle cx="151" cy="315" r="6" fill="#ffd76a" /><circle cx="229" cy="315" r="6" fill="#ffd76a" />
+              </g>
+              <g class="clothing-layer" data-category="bottom" data-value="tutu">
+                <path d="M112 357 Q190 338 268 357 L284 394 Q244 416 190 404 Q136 416 96 394Z" fill="#8abce8" stroke="#4f81b4" stroke-width="4" />
+                <path d="M108 370 Q190 350 272 370 M102 386 Q190 366 278 386" fill="none" stroke="#fff1a9" stroke-width="8" opacity=".9" />
+                <path d="M141 357 L127 401 M190 352 V406 M239 357 L253 401" stroke="#5f91c1" stroke-width="3" />
+              </g>
+              <g class="clothing-layer" data-category="bottom" data-value="cargo">
+                <path d="M109 354 Q190 339 271 354 L263 456 L211 456 L190 399 L169 456 L117 456Z" fill="#9cc29a" stroke="#5f8d68" stroke-width="4" />
+                <rect x="119" y="378" width="43" height="35" rx="6" fill="#b6d5af" stroke="#5f8d68" stroke-width="3" />
+                <rect x="218" y="378" width="43" height="35" rx="6" fill="#b6d5af" stroke="#5f8d68" stroke-width="3" />
+                <path d="M190 356 V399" stroke="#e3f0d9" stroke-width="4" />
+              </g>
+              <g class="clothing-layer" data-category="bottom" data-value="bloomers">
+                <path d="M108 358 Q190 340 272 358 Q286 391 263 418 Q232 430 201 406 L190 390 L179 406 Q148 430 117 418 Q94 391 108 358Z" fill="#f4b8c7" stroke="#cf718c" stroke-width="4" />
+                <path d="M118 370 Q190 386 262 370" fill="none" stroke="#fff0f4" stroke-width="7" />
+                <circle cx="139" cy="392" r="5" fill="#fff6d3" /><circle cx="241" cy="392" r="5" fill="#fff6d3" />
+              </g>
+              <g class="clothing-layer" data-category="bottom" data-value="pajama">
+                <path d="M111 355 Q190 339 269 355 L263 463 L210 463 L190 395 L170 463 L117 463Z" fill="#b8afe8" stroke="#796cb3" stroke-width="4" />
+                <path d="M190 354 V395" stroke="#eeeaff" stroke-width="4" />
+                <path d="M137 393 L142 405 L155 406 L145 414 L148 427 L137 420 L126 427 L129 414 L119 406 L132 405Z" fill="#fff0a8" />
+                <circle cx="235" cy="414" r="15" fill="#fff0a8" />
+                <circle cx="243" cy="408" r="15" fill="#b8afe8" />
+                <circle cx="237" cy="448" r="4" fill="#fff0a8" /><circle cx="151" cy="448" r="4" fill="#fff0a8" />
+              </g>
+              <g class="clothing-layer" data-category="bottom" data-value="rainbow-skirt">
+                <path d="M107 358 Q190 340 273 358 L289 441 Q190 468 91 441Z" fill="#89cbe9" stroke="#5e98bf" stroke-width="4" />
+                <path d="M103 382 Q190 407 277 382 M97 408 Q190 435 283 408" fill="none" stroke="#ffd766" stroke-width="13" />
+                <path d="M93 432 Q190 458 287 432" fill="none" stroke="#ef8da2" stroke-width="13" />
+              </g>
+
+              <g class="clothing-layer" data-category="top" data-value="stripe">
+                <path d="M124 286 Q99 277 80 309 L72 350 Q82 366 101 357 L119 319Z M256 286 Q281 277 300 309 L308 350 Q298 366 279 357 L261 319Z" fill="#fff8ed" stroke="#e4cdbd" stroke-width="4" />
+                <path d="M82 322 L112 333 M268 333 L298 322" stroke="#ef8a91" stroke-width="12" />
+                <path d="M112 286 Q132 267 151 266 Q190 284 229 266 Q248 267 268 286 L276 376 Q190 402 104 376 Z" fill="#fff8ed" stroke="#e4cdbd" stroke-width="4" />
+                <path d="M110 309 Q190 330 270 309 M107 340 Q190 362 273 340 M104 370 Q190 392 276 370" fill="none" stroke="#ef8a91" stroke-width="13" />
+                <path d="M160 267 Q190 293 220 267" fill="#fff8ed" stroke="#e4cdbd" stroke-width="4" />
+              </g>
+              <g class="clothing-layer" data-category="top" data-value="hoodie">
+                <path d="M124 287 Q98 278 79 310 L71 351 Q81 367 101 358 L119 320Z M256 287 Q282 278 301 310 L309 351 Q299 367 279 358 L261 320Z" fill="#a8dfca" stroke="#5fae92" stroke-width="4" />
+                <path d="M111 289 Q139 264 158 267 Q190 282 222 267 Q242 265 269 289 L278 378 Q190 399 102 378 Z" fill="#a8dfca" stroke="#5fae92" stroke-width="4" />
+                <path d="M151 267 Q190 301 229 267 Q220 241 190 240 Q160 241 151 267Z" fill="#83cbb0" stroke="#5fae92" stroke-width="4" />
+                <path d="M174 283 V326 M206 283 V326" stroke="#fffaf2" stroke-width="5" stroke-linecap="round" />
+                <circle cx="174" cy="328" r="7" fill="#fffaf2" /><circle cx="206" cy="328" r="7" fill="#fffaf2" />
+                <path d="M151 359 Q190 343 229 359 L226 380 Q190 387 154 380Z" fill="#8fd2ba" stroke="#5fae92" stroke-width="3" />
+              </g>
+              <g class="clothing-layer" data-category="top" data-value="sweater">
+                <path d="M124 286 Q98 277 79 309 L71 351 Q81 367 101 358 L119 319Z M256 286 Q282 277 301 309 L309 351 Q299 367 279 358 L261 319Z" fill="#f6ce69" stroke="#d99a3e" stroke-width="4" />
+                <path d="M111 287 Q137 265 158 267 Q190 283 222 267 Q243 265 269 287 L278 378 Q190 401 102 378 Z" fill="#f6ce69" stroke="#d99a3e" stroke-width="4" />
+                <path d="M158 267 Q190 293 222 267" fill="#fff4cc" stroke="#d99a3e" stroke-width="4" />
+                <path d="M190 306 L199 326 L221 329 L205 345 L209 368 L190 357 L171 368 L175 345 L159 329 L181 326Z" fill="#fff6cf" stroke="#e1aa48" stroke-width="3" />
+                <path d="M104 366 Q190 389 276 366" fill="none" stroke="#e7ad47" stroke-width="10" />
+              </g>
+              <g class="clothing-layer" data-category="top" data-value="sailor">
+                <path d="M124 286 Q98 277 79 309 L71 351 Q81 367 101 358 L119 319Z M256 286 Q282 277 301 309 L309 351 Q299 367 279 358 L261 319Z" fill="#f9fbff" stroke="#5477a9" stroke-width="4" />
+                <path d="M111 287 Q137 265 158 267 Q190 283 222 267 Q243 265 269 287 L278 378 Q190 401 102 378Z" fill="#f9fbff" stroke="#5477a9" stroke-width="4" />
+                <path d="M148 269 Q190 306 232 269 L220 319 L190 300 L160 319Z" fill="#6b91c7" stroke="#456b9e" stroke-width="4" />
+                <path d="M190 302 L207 328 L190 355 L173 328Z" fill="#ef7893" />
+                <path d="M104 362 Q190 386 276 362" fill="none" stroke="#6b91c7" stroke-width="12" />
+              </g>
+              <g class="clothing-layer" data-category="top" data-value="rainbow">
+                <path d="M124 286 Q98 277 79 309 L71 351 Q81 367 101 358 L119 319Z M256 286 Q282 277 301 309 L309 351 Q299 367 279 358 L261 319Z" fill="#cbb9ef" stroke="#8b72ba" stroke-width="4" />
+                <path d="M111 287 Q137 265 158 267 Q190 283 222 267 Q243 265 269 287 L278 378 Q190 401 102 378Z" fill="#cbb9ef" stroke="#8b72ba" stroke-width="4" />
+                <path d="M151 350 A39 39 0 0 1 229 350" fill="none" stroke="#ef8299" stroke-width="17" />
+                <path d="M158 350 A32 32 0 0 1 222 350" fill="none" stroke="#ffd462" stroke-width="10" />
+                <path d="M168 350 A22 22 0 0 1 212 350" fill="none" stroke="#78c7b2" stroke-width="9" />
+              </g>
+              <g class="clothing-layer" data-category="top" data-value="polka">
+                <path d="M124 286 Q98 277 79 309 L71 351 Q81 367 101 358 L119 319Z M256 286 Q282 277 301 309 L309 351 Q299 367 279 358 L261 319Z" fill="#f49db0" stroke="#cc627e" stroke-width="4" />
+                <path d="M111 287 Q137 265 158 267 Q190 283 222 267 Q243 265 269 287 L278 378 Q190 401 102 378Z" fill="#f49db0" stroke="#cc627e" stroke-width="4" />
+                <g fill="#fff7e6"><circle cx="133" cy="315" r="9" /><circle cx="184" cy="330" r="9" /><circle cx="238" cy="307" r="9" /><circle cx="147" cy="361" r="9" /><circle cx="224" cy="367" r="9" /></g>
+                <path d="M156 269 Q190 297 224 269" fill="none" stroke="#fff7e6" stroke-width="12" />
+              </g>
+              <g class="clothing-layer" data-category="top" data-value="jacket">
+                <path d="M124 286 Q98 277 79 309 L71 351 Q81 367 101 358 L119 319Z M256 286 Q282 277 301 309 L309 351 Q299 367 279 358 L261 319Z" fill="#79aee0" stroke="#497fae" stroke-width="4" />
+                <path d="M111 287 Q137 265 158 267 Q190 283 222 267 Q243 265 269 287 L278 378 Q190 401 102 378Z" fill="#79aee0" stroke="#497fae" stroke-width="4" />
+                <path d="M166 272 L190 301 L214 272 L228 380 Q190 387 152 380Z" fill="#fff1a9" stroke="#497fae" stroke-width="4" />
+                <path d="M154 273 L190 301 L169 329 M226 273 L190 301 L211 329" fill="#a5cef0" stroke="#497fae" stroke-width="4" />
+                <circle cx="217" cy="345" r="5" fill="#ffd66b" />
+              </g>
+              <g class="clothing-layer" data-category="top" data-value="pajama-top">
+                <path d="M124 286 Q98 277 79 309 L71 351 Q81 367 101 358 L119 319Z M256 286 Q282 277 301 309 L309 351 Q299 367 279 358 L261 319Z" fill="#b8afe8" stroke="#796cb3" stroke-width="4" />
+                <path d="M111 287 Q137 265 158 267 Q190 283 222 267 Q243 265 269 287 L278 378 Q190 401 102 378Z" fill="#b8afe8" stroke="#796cb3" stroke-width="4" />
+                <path d="M160 269 Q190 299 220 269 M190 292 V380" fill="none" stroke="#f4efff" stroke-width="5" />
+                <circle cx="205" cy="319" r="5" fill="#fff0a8" /><circle cx="214" cy="350" r="5" fill="#fff0a8" />
+                <circle cx="147" cy="338" r="24" fill="#fff0a8" />
+                <circle cx="158" cy="329" r="24" fill="#b8afe8" />
+                <path d="M240 316 L244 326 L255 327 L247 334 L249 345 L240 339 L231 345 L233 334 L225 327 L236 326Z" fill="#fff0a8" />
+              </g>
+
+              <g class="character-layer is-active" data-character="bunny" data-layer="front" filter="url(#softShadow)">
+                <circle cx="190" cy="213" r="116" fill="url(#fur)" stroke="#e7d9d3" stroke-width="4" />
+                <ellipse cx="145" cy="211" rx="15" ry="20" fill="#40353f" />
+                <ellipse cx="235" cy="211" rx="15" ry="20" fill="#40353f" />
+                <circle cx="140" cy="205" r="5" fill="white" /><circle cx="230" cy="205" r="5" fill="white" />
+                <ellipse cx="190" cy="243" rx="13" ry="10" fill="#e89099" />
+                <path d="M190 251 Q176 270 161 256 M190 251 Q204 270 219 256" fill="none" stroke="#654954" stroke-width="5" stroke-linecap="round" />
+                <ellipse cx="123" cy="250" rx="22" ry="11" fill="#f7b9bf" opacity=".52" />
+                <ellipse cx="257" cy="250" rx="22" ry="11" fill="#f7b9bf" opacity=".52" />
+                <path d="M119 231 H92 M121 243 L94 250 M261 231 H288 M259 243 L286 250" stroke="#a98b91" stroke-width="3" stroke-linecap="round" />
+              </g>
+
+              <g class="character-layer" data-character="cheetah" data-layer="front" filter="url(#softShadow)">
+                <circle cx="190" cy="213" r="116" fill="#eeb252" stroke="#ad6f28" stroke-width="4" />
+                <ellipse cx="190" cy="249" rx="63" ry="47" fill="#ffe2a4" opacity=".96" />
+                <ellipse cx="147" cy="210" rx="15" ry="20" fill="#3e3030" />
+                <ellipse cx="233" cy="210" rx="15" ry="20" fill="#3e3030" />
+                <circle cx="142" cy="204" r="5" fill="white" /><circle cx="228" cy="204" r="5" fill="white" />
+                <path d="M177 237 Q190 227 203 237 L190 250Z" fill="#7e4a42" />
+                <path d="M190 250 Q177 270 159 257 M190 250 Q203 270 221 257" fill="none" stroke="#654039" stroke-width="5" stroke-linecap="round" />
+                <g fill="#6b4b35"><circle cx="137" cy="166" r="7" /><circle cx="164" cy="149" r="6" /><circle cx="190" cy="160" r="7" /><circle cx="218" cy="148" r="6" /><circle cx="245" cy="168" r="7" /><circle cx="119" cy="207" r="6" /><circle cx="261" cy="207" r="6" /></g>
+                <ellipse cx="120" cy="251" rx="20" ry="9" fill="#f39aa3" opacity=".5" />
+                <ellipse cx="260" cy="251" rx="20" ry="9" fill="#f39aa3" opacity=".5" />
+                <path d="M123 232 H96 M257 232 H284" stroke="#845c43" stroke-width="3" stroke-linecap="round" />
+              </g>
+
+              <g class="character-layer" data-character="penguin" data-layer="front" filter="url(#softShadow)">
+                <circle cx="190" cy="213" r="114" fill="#3e4656" stroke="#252b37" stroke-width="4" />
+                <ellipse cx="153" cy="218" rx="63" ry="83" transform="rotate(-14 153 218)" fill="#fffaf1" />
+                <ellipse cx="227" cy="218" rx="63" ry="83" transform="rotate(14 227 218)" fill="#fffaf1" />
+                <ellipse cx="151" cy="207" rx="14" ry="19" fill="#30333d" />
+                <ellipse cx="229" cy="207" rx="14" ry="19" fill="#30333d" />
+                <circle cx="146" cy="201" r="5" fill="white" /><circle cx="224" cy="201" r="5" fill="white" />
+                <path d="M168 237 Q190 220 212 237 Q190 260 168 237Z" fill="#f2ad45" stroke="#c5762f" stroke-width="3" />
+                <ellipse cx="123" cy="249" rx="22" ry="10" fill="#f2a3ad" opacity=".55" />
+                <ellipse cx="257" cy="249" rx="22" ry="10" fill="#f2a3ad" opacity=".55" />
+                <path d="M174 272 Q190 282 206 272" fill="none" stroke="#c8b9b2" stroke-width="4" stroke-linecap="round" />
+              </g>
+
+              <g class="clothing-layer" data-category="hat" data-value="beret">
+                <ellipse cx="190" cy="122" rx="88" ry="38" fill="#ef879b" stroke="#cf617c" stroke-width="4" transform="rotate(-7 190 122)" />
+                <path d="M191 91 Q177 68 197 63 Q209 79 204 94" fill="#ef879b" stroke="#cf617c" stroke-width="4" stroke-linecap="round" />
+                <path d="M124 129 Q192 151 261 116" fill="none" stroke="#cf617c" stroke-width="7" stroke-linecap="round" />
+              </g>
+              <g class="clothing-layer" data-category="hat" data-value="crown">
+                <path d="M127 145 L119 78 L158 106 L190 64 L222 106 L261 78 L253 145 Z" fill="#ffd96f" stroke="#dda83c" stroke-width="5" stroke-linejoin="round" />
+                <circle cx="190" cy="111" r="10" fill="#f58ba1" />
+                <circle cx="143" cy="119" r="7" fill="#78c9b0" /><circle cx="237" cy="119" r="7" fill="#78c9b0" />
+              </g>
+              <g class="clothing-layer" data-category="hat" data-value="flower">
+                <path d="M111 154 Q190 116 269 154 Q250 128 224 118 Q190 106 156 118 Q130 128 111 154Z" fill="#fff5cf" stroke="#e5bd58" stroke-width="4" />
+                <g transform="translate(220 115)">
+                  <circle cx="0" cy="-16" r="14" fill="#ff9eae" /><circle cx="16" cy="0" r="14" fill="#ff9eae" />
+                  <circle cx="0" cy="16" r="14" fill="#ff9eae" /><circle cx="-16" cy="0" r="14" fill="#ff9eae" />
+                  <circle cx="0" cy="0" r="11" fill="#ffd766" />
+                </g>
+              </g>
+              <g class="clothing-layer" data-category="hat" data-value="cap">
+                <path d="M121 139 Q132 78 196 77 Q251 80 263 131Z" fill="#78b9e3" stroke="#4f86b4" stroke-width="4" />
+                <path d="M185 127 Q243 116 286 138 Q247 161 182 148Z" fill="#8bc7eb" stroke="#4f86b4" stroke-width="4" />
+                <circle cx="194" cy="77" r="7" fill="#ffd66b" />
+              </g>
+              <g class="clothing-layer" data-category="hat" data-value="party">
+                <path d="M142 145 L196 45 L244 145Z" fill="#c6b1ec" stroke="#876bb8" stroke-width="4" />
+                <path d="M159 115 L224 115 M174 85 L210 85" stroke="#ffd66b" stroke-width="11" />
+                <circle cx="196" cy="42" r="13" fill="#f18ca2" />
+              </g>
+              <g class="clothing-layer" data-category="hat" data-value="bow">
+                <path d="M190 127 Q148 86 125 112 Q116 143 160 158 L190 142 Q232 178 255 145 Q266 113 220 116Z" fill="#ef8da6" stroke="#c65d79" stroke-width="5" />
+                <circle cx="190" cy="136" r="18" fill="#ffd66b" stroke="#c65d79" stroke-width="4" />
+              </g>
+              <g class="clothing-layer" data-category="hat" data-value="beanie">
+                <path d="M121 145 Q126 74 190 68 Q254 74 259 145Z" fill="#8ed4bc" stroke="#56a287" stroke-width="4" />
+                <path d="M117 132 Q190 114 263 132 L259 157 Q190 143 121 157Z" fill="#aee5d2" stroke="#56a287" stroke-width="4" />
+                <circle cx="190" cy="65" r="18" fill="#ffd66b" stroke="#d4a73e" stroke-width="3" />
+              </g>
+              <g class="clothing-layer" data-category="hat" data-value="nightcap">
+                <path d="M124 149 Q137 103 172 84 Q205 65 237 78 Q214 90 218 113 Q220 135 256 147Z" fill="#8175bd" stroke="#564a91" stroke-width="4" />
+                <path d="M125 143 Q190 126 255 143 L253 162 Q190 149 127 162Z" fill="#b8afe8" stroke="#564a91" stroke-width="4" />
+                <circle cx="238" cy="77" r="15" fill="#fff0a8" stroke="#d5b94b" stroke-width="3" />
+                <path d="M174 104 L178 114 L189 115 L181 122 L183 133 L174 127 L165 133 L167 122 L159 115 L170 114Z" fill="#fff0a8" />
+              </g>
+              <g class="clothing-layer" data-category="hat" data-value="chef">
+                <path d="M131 143 Q114 119 132 101 Q127 72 156 69 Q174 44 196 65 Q225 48 234 77 Q264 82 255 111 Q270 130 248 145Z" fill="#fffdf8" stroke="#d7c9c5" stroke-width="4" />
+                <rect x="133" y="132" width="114" height="31" rx="8" fill="#fffdf8" stroke="#d7c9c5" stroke-width="4" />
+              </g>
+
+              <g class="clothing-layer" data-category="shoes" data-value="yellow">
+                <path d="M96 459 Q141 438 180 463 L178 494 Q117 510 87 485 Q85 470 96 459Z" fill="#ffd567" stroke="#d9a83d" stroke-width="4" />
+                <path d="M284 459 Q239 438 200 463 L202 494 Q263 510 293 485 Q295 470 284 459Z" fill="#ffd567" stroke="#d9a83d" stroke-width="4" />
+                <path d="M99 476 Q134 488 173 477 M281 476 Q246 488 207 477" fill="none" stroke="#fff3c5" stroke-width="7" />
+              </g>
+              <g class="clothing-layer" data-category="shoes" data-value="boots">
+                <path d="M109 433 H170 L181 492 Q122 507 91 482 L98 453Z" fill="#6f9fd2" stroke="#456f9f" stroke-width="4" />
+                <path d="M271 433 H210 L199 492 Q258 507 289 482 L282 453Z" fill="#6f9fd2" stroke="#456f9f" stroke-width="4" />
+                <path d="M100 455 H174 M280 455 H206" stroke="#ffe58b" stroke-width="8" />
+              </g>
+              <g class="clothing-layer" data-category="shoes" data-value="bunny">
+                <path d="M98 462 Q138 441 179 466 L177 494 Q118 509 88 485 Q87 472 98 462Z" fill="#bba6e8" stroke="#826ab8" stroke-width="4" />
+                <path d="M282 462 Q242 441 201 466 L203 494 Q262 509 292 485 Q293 472 282 462Z" fill="#bba6e8" stroke="#826ab8" stroke-width="4" />
+                <path d="M116 460 L108 438 M139 456 L145 433 M264 460 L272 438 M241 456 L235 433" stroke="#bba6e8" stroke-width="13" stroke-linecap="round" />
+                <circle cx="137" cy="479" r="4" fill="#4c405b" /><circle cx="243" cy="479" r="4" fill="#4c405b" />
+              </g>
+              <g class="clothing-layer" data-category="shoes" data-value="rainboots">
+                <path d="M108 426 H169 L179 493 Q122 507 91 484 L99 451Z M272 426 H211 L201 493 Q258 507 289 484 L281 451Z" fill="#79c8b0" stroke="#478f79" stroke-width="4" />
+                <path d="M100 444 H173 M280 444 H207" stroke="#fff2a8" stroke-width="8" />
+              </g>
+              <g class="clothing-layer" data-category="shoes" data-value="ballet">
+                <path d="M96 466 Q141 441 179 469 L176 493 Q121 506 89 485Z M284 466 Q239 441 201 469 L204 493 Q259 506 291 485Z" fill="#f4adc0" stroke="#cd718b" stroke-width="4" />
+                <path d="M119 456 L155 486 M261 456 L225 486 M104 455 L166 487 M276 455 L214 487" stroke="#f4adc0" stroke-width="7" />
+              </g>
+              <g class="clothing-layer" data-category="shoes" data-value="blue-sneakers">
+                <path d="M96 461 Q142 439 180 465 L177 494 Q117 507 87 484 Q87 470 96 461Z M284 461 Q238 439 200 465 L203 494 Q263 507 293 484 Q293 470 284 461Z" fill="#74afe0" stroke="#447eae" stroke-width="4" />
+                <path d="M119 466 L155 481 M261 466 L225 481" stroke="white" stroke-width="6" stroke-linecap="round" />
+                <path d="M91 486 Q134 501 176 486 M289 486 Q246 501 204 486" fill="none" stroke="white" stroke-width="7" />
+              </g>
+              <g class="clothing-layer" data-category="shoes" data-value="sandals">
+                <path d="M94 477 Q137 447 178 473 L176 496 Q123 508 88 487Z M286 477 Q243 447 202 473 L204 496 Q257 508 292 487Z" fill="#e7a66b" stroke="#b87342" stroke-width="4" />
+                <path d="M108 460 Q139 477 166 462 M272 460 Q241 477 214 462" fill="none" stroke="#e7a66b" stroke-width="11" />
+              </g>
+              <g class="clothing-layer" data-category="shoes" data-value="skates">
+                <path d="M103 447 Q141 438 176 462 L174 489 Q126 500 94 480Z M277 447 Q239 438 204 462 L206 489 Q254 500 286 480Z" fill="#c2b1eb" stroke="#7e67b4" stroke-width="4" />
+                <path d="M98 490 H174 M206 490 H282" stroke="#67606e" stroke-width="6" />
+                <g fill="#ef8da2" stroke="#a94e69" stroke-width="2"><circle cx="114" cy="499" r="8" /><circle cx="156" cy="499" r="8" /><circle cx="224" cy="499" r="8" /><circle cx="266" cy="499" r="8" /></g>
+              </g>
+            </svg>
+
+            <div class="drop-prompt" aria-hidden="true"><span>↓</span></div>
+
+            <div class="stage-floor" aria-hidden="true">
+              <span>✿</span><span>✿</span><span>✿</span>
+            </div>
+          </div>
+
+          <div class="stage-actions">
+            <button class="action-button action-button--random" id="randomButton" type="button" aria-label="깜짝 코디" title="깜짝 코디">
+              <span aria-hidden="true">🎲</span>
+            </button>
+            <button class="action-button action-button--reset" id="resetButton" type="button" aria-label="옷 모두 벗기" title="옷 모두 벗기">
+              <span aria-hidden="true">↺</span>
+            </button>
+          </div>
+        </div>
+
+        <aside class="closet-panel" aria-label="옷장">
+          <nav class="category-tabs" aria-label="꾸미기 종류">
+            <button class="category-tab" type="button" data-tab="hat" aria-selected="false"><span aria-hidden="true">🎩</span>모자</button>
+            <button class="category-tab is-active" type="button" data-tab="top" aria-selected="true"><span aria-hidden="true">👕</span>상의</button>
+            <button class="category-tab" type="button" data-tab="bottom" aria-selected="false"><span aria-hidden="true">🩳</span>하의</button>
+            <button class="category-tab" type="button" data-tab="shoes" aria-selected="false"><span aria-hidden="true">👟</span>신발</button>
+          </nav>
+
+          <div class="closet-content">
+            <div class="closet-heading">
+              <div>
+                <p class="visually-hidden" id="closetHint">같은 테마끼리 맞추면 한 벌 완성!</p>
+                <h2 id="closetTitle">상의</h2>
+              </div>
+              <span class="hanger" aria-hidden="true">⌁</span>
+            </div>
+
+            <div class="item-grid" id="itemGrid" role="group" aria-labelledby="closetTitle"></div>
+
+            <div class="kid-tip">
+              <span class="kid-tip__icon" aria-hidden="true">↝</span>
+              <span class="kid-tip__paw" aria-hidden="true">🐾</span>
+            </div>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <template id="itemTemplate">
+      <button class="item-card" type="button">
+        <span class="item-art" aria-hidden="true"></span>
+        <span class="item-name"></span>
+        <span class="item-theme"></span>
+        <span class="check-mark" aria-hidden="true">✓</span>
+      </button>
+    </template>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
