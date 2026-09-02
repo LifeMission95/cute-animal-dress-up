@@ -77,8 +77,8 @@ const speechBubble = document.querySelector("#speechBubble");
 const progressDots = document.querySelector("#progressDots");
 const soundButton = document.querySelector("#soundButton");
 const soundLabel = soundButton.querySelector(".sound-label");
+const refreshButton = document.querySelector("#refreshButton");
 const sparkleBox = document.querySelector("#sparkles");
-const stage = document.querySelector("#stage");
 const characterPicker = document.querySelector("#characterPicker");
 const pickerGrid = document.querySelector("#pickerGrid");
 const gameBoard = document.querySelector("#gameBoard");
@@ -86,7 +86,6 @@ const changeCharacterButton = document.querySelector("#changeCharacterButton");
 let audioContext;
 let bounceTimer;
 let messageTimer;
-let dragState = null;
 
 const getCharacter = (value = state.character) => characters.find((character) => character.value === value) || characters[0];
 const getItem = (category, value = state[category]) => wardrobe[category]?.items.find((candidate) => candidate.value === value);
@@ -161,7 +160,6 @@ function renderPicker() {
 }
 
 function showPicker() {
-  cleanupDrag();
   characterPicker.classList.remove("is-hidden");
   gameBoard.classList.add("is-hidden");
   changeCharacterButton.classList.add("is-hidden");
@@ -206,48 +204,10 @@ function renderItems() {
     card.querySelector(".item-theme").textContent = "";
     card.classList.toggle("is-remove-card", currentItem.value === "none");
     card.classList.toggle("is-selected", isSelected); card.setAttribute("aria-pressed", isSelected ? "true" : "false");
-    card.setAttribute("aria-label", currentItem.value === "none" ? `${currentItem.name}, 눌러서 바로 벗기` : `${currentItem.name}, 동물 친구에게 끌어다 놓기`);
-    card.addEventListener("dragstart", (event) => event.preventDefault());
-    card.addEventListener("pointerdown", (event) => {
-      if (currentItem.value !== "none") beginDrag(event, card, currentItem);
-    });
-    card.addEventListener("click", (event) => {
-      if (currentItem.value === "none" || event.detail === 0) selectItem(state.activeTab, currentItem.value, currentItem.name);
-    });
+    card.setAttribute("aria-label", currentItem.value === "none" ? `${currentItem.name}, 눌러서 바로 벗기` : `${currentItem.name}, 눌러서 입히기`);
+    card.addEventListener("click", () => selectItem(state.activeTab, currentItem.value, currentItem.name));
     itemGrid.appendChild(card);
   });
-}
-
-function beginDrag(event, card, currentItem) {
-  if (currentItem.value === "none") return;
-  if (!event.isPrimary || (event.pointerType === "mouse" && event.button !== 0)) return;
-  event.preventDefault();
-  const ghost = document.createElement("div"); const ghostArt = document.createElement("span"); const ghostLabel = document.createElement("b");
-  ghost.className = "drag-ghost"; ghostArt.className = "drag-ghost-art"; ghost.style.setProperty("--card-bg", currentItem.color);
-  ghostArt.appendChild(createCardPreview(state.activeTab, currentItem.value)); ghostLabel.textContent = currentItem.name; ghost.append(ghostArt, ghostLabel); document.body.appendChild(ghost);
-  dragState = { pointerId: event.pointerId, category: state.activeTab, item: currentItem, card, ghost };
-  card.classList.add("is-dragging"); stage.classList.add("is-drop-ready"); document.body.classList.add("is-carrying"); moveDrag(event); showMessage("↓");
-  document.addEventListener("pointermove", moveDrag, { passive: false }); document.addEventListener("pointerup", endDrag, { once: true }); document.addEventListener("pointercancel", cancelDrag, { once: true });
-}
-function isOverCharacter(clientX, clientY) {
-  const rect = characterSvg.getBoundingClientRect(); const paddingX = Math.min(55, rect.width * 0.12);
-  return clientX >= rect.left - paddingX && clientX <= rect.right + paddingX && clientY >= rect.top - 24 && clientY <= rect.bottom + 24;
-}
-function moveDrag(event) {
-  if (!dragState || event.pointerId !== dragState.pointerId) return;
-  if (event.cancelable) event.preventDefault();
-  dragState.ghost.style.left = `${event.clientX}px`; dragState.ghost.style.top = `${event.clientY}px`; stage.classList.toggle("is-drop-hover", isOverCharacter(event.clientX, event.clientY));
-}
-function endDrag(event) {
-  if (!dragState || event.pointerId !== dragState.pointerId) return;
-  const dropped = isOverCharacter(event.clientX, event.clientY); const { category, item: currentItem } = dragState; cleanupDrag();
-  if (dropped) selectItem(category, currentItem.value, currentItem.name); else showMessage("↺");
-}
-function cancelDrag(event) { if (!dragState || event.pointerId !== dragState.pointerId) return; cleanupDrag(); showMessage("↺"); }
-function cleanupDrag() {
-  if (!dragState) return;
-  const { card, ghost } = dragState; document.removeEventListener("pointermove", moveDrag); document.removeEventListener("pointerup", endDrag); document.removeEventListener("pointercancel", cancelDrag);
-  card.classList.remove("is-dragging"); ghost.remove(); stage.classList.remove("is-drop-ready", "is-drop-hover"); document.body.classList.remove("is-carrying"); dragState = null;
 }
 
 function selectTab(tab) {
@@ -288,6 +248,7 @@ function resetGame() { Object.keys(wardrobe).forEach((category) => { state[categ
 
 categoryTabs.forEach((button) => button.addEventListener("click", () => { selectTab(button.dataset.tab); playPop(); }));
 soundButton.addEventListener("click", () => { state.soundOn = !state.soundOn; updateSoundButton(); saveState(); if (state.soundOn) playPop(); });
+refreshButton.addEventListener("click", () => window.location.reload());
 document.querySelector("#randomButton").addEventListener("click", randomizeLook);
 document.querySelector("#resetButton").addEventListener("click", resetGame);
 changeCharacterButton.addEventListener("click", showPicker);
