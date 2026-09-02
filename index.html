@@ -29,10 +29,15 @@
           </button>
           <h1>작은 옷장</h1>
         </div>
-        <button class="sound-button" id="soundButton" type="button" aria-pressed="true">
-          <span aria-hidden="true">♪</span>
-          <span class="sound-label visually-hidden">소리 켜짐</span>
-        </button>
+        <div class="header-actions">
+          <button class="refresh-button" id="refreshButton" type="button" aria-label="웹 새로고침">
+            <span aria-hidden="true">↻</span>
+          </button>
+          <button class="sound-button" id="soundButton" type="button" aria-pressed="true">
+            <span aria-hidden="true">♪</span>
+            <span class="sound-label visually-hidden">소리 켜짐</span>
+          </button>
+        </div>
       </header>
 
       <section class="character-picker-screen" id="characterPicker" aria-labelledby="pickerTitle">
@@ -357,8 +362,6 @@
                 <g fill="#ef8da2" stroke="#a94e69" stroke-width="2"><circle cx="114" cy="499" r="8" /><circle cx="156" cy="499" r="8" /><circle cx="224" cy="499" r="8" /><circle cx="266" cy="499" r="8" /></g>
               </g>
             </svg>
-
-            <div class="drop-prompt" aria-hidden="true"><span>↓</span></div>
 
             <div class="stage-floor" aria-hidden="true">
               <span>✿</span><span>✿</span><span>✿</span>
